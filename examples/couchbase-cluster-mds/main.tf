@@ -22,12 +22,12 @@ module "couchbase_data_nodes" {
   source = "../../modules/couchbase-cluster"
 
   cluster_name = var.couchbase_data_node_cluster_name
-  min_size     = 3
+  min_size     = 2
   max_size     = 3
 
   # We use small instance types to keep these examples cheap to run. In a production setting, you'll probably want
   # R4 or M4 instances.
-  instance_type = "t2.micro"
+  instance_type = "t4g.micro"
 
   ami_id    = data.template_file.ami_id.rendered
   user_data = data.template_file.user_data_couchbase_data_nodes.rendered
@@ -84,7 +84,7 @@ module "couchbase_index_query_search_nodes" {
 
   # We use small instance types to keep these examples cheap to run. In a production setting, you'll probably want
   # R4 or M4 instances.
-  instance_type = "t2.micro"
+  instance_type = "t4g.micro"
 
   ami_id    = data.template_file.ami_id.rendered
   user_data = data.template_file.user_data_couchbase_index_query_search_nodes.rendered
@@ -141,7 +141,7 @@ module "sync_gateway" {
 
   # We use small instance types to keep these examples cheap to run. In a production setting, you'll probably want
   # R4 or M4 instances.
-  instance_type = "t2.micro"
+  instance_type = "t4g.micro"
 
   ami_id    = data.template_file.ami_id.rendered
   user_data = data.template_file.user_data_sync_gateway.rendered

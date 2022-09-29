@@ -20,14 +20,14 @@ readonly COMMUNITY_EDITION="community"
 readonly DEFAULT_EDITION="$ENTERPRISE_EDITION"
 
 # Get these from the downloads section of the Couchbase website: https://www.couchbase.com/downloads
-readonly DEFAULT_SYNC_GATEWAY_ENTERPRISE_VERSION="2.7.3"
-readonly DEFAULT_SYNC_GATEWAY_ENTERPRISE_CHECKSUM_UBUNTU="64868af179f4cd4aaf753054dc24c246d05e2df14aec80af591f0ffbb41f456b"
-readonly DEFAULT_SYNC_GATEWAY_ENTERPRISE_CHECKSUM_AMAZON_LINUX="be7da0c542b6eab3bea7bf56acfc7fb104c712b2d861077e6f30842e066617ef"
+readonly DEFAULT_SYNC_GATEWAY_ENTERPRISE_VERSION="3.0.3"
+# readonly DEFAULT_SYNC_GATEWAY_ENTERPRISE_CHECKSUM_UBUNTU="64868af179f4cd4aaf753054dc24c246d05e2df14aec80af591f0ffbb41f456b"
+readonly DEFAULT_SYNC_GATEWAY_ENTERPRISE_CHECKSUM_AMAZON_LINUX="528ef1bf4118ddeff8ba8dee23585c7e84dedc17716e4cad8118c6989206ff7a"
 
 # Get these from the downloads section of the Couchbase website: https://www.couchbase.com/downloads
-readonly DEFAULT_SYNC_GATEWAY_COMMUNITY_VERSION="2.7.3"
-readonly DEFAULT_SYNC_GATEWAY_COMMUNITY_CHECKSUM_UBUNTU="4e0306d06840c8e5a6df6984cb47feb5706df5a11058e4253eaab9d9a9044d18"
-readonly DEFAULT_SYNC_GATEWAY_COMMUNITY_CHECKSUM_AMAZON_LINUX="068a52128ed92b4781bd07a2ca962d44f2e13c7c1ba45071af233913fe5fd40e"
+# readonly DEFAULT_SYNC_GATEWAY_COMMUNITY_VERSION="2.7.3"
+# readonly DEFAULT_SYNC_GATEWAY_COMMUNITY_CHECKSUM_UBUNTU="4e0306d06840c8e5a6df6984cb47feb5706df5a11058e4253eaab9d9a9044d18"
+# readonly DEFAULT_SYNC_GATEWAY_COMMUNITY_CHECKSUM_AMAZON_LINUX="068a52128ed92b4781bd07a2ca962d44f2e13c7c1ba45071af233913fe5fd40e"
 
 readonly SHA256_CHECKSUM_TYPE="sha256"
 readonly MD5_CHECKSUM_TYPE="md5"
@@ -100,7 +100,9 @@ function install_sync_gateway_on_amazon_linux {
 
   log_info "Installing Couchbase $version ($edition edition) on Amazon Linux"
 
-  local readonly filepath="couchbase-sync-gateway-${edition}_${version}_x86_64.rpm"
+  # https://packages.couchbase.com/releases/couchbase-sync-gateway/3.0.3/couchbase-sync-gateway-enterprise_3.0.3_aarch64.rpm
+  # there is no x86 option
+  local readonly filepath="couchbase-sync-gateway-${edition}_${version}_aarch64.rpm"
   local readonly url="https://packages.couchbase.com/releases/couchbase-sync-gateway/$version/$filepath"
 
   log_info "Downloading Sync Gateway from $url to $filepath"
