@@ -89,7 +89,7 @@ module "couchbase_index_query_search_nodes" {
   ami_id    = data.template_file.ami_id.rendered
   user_data = data.template_file.user_data_couchbase_index_query_search_nodes.rendered
 
-  vpc_id     = data.aws_vpc.default.id
+  vpc_id     = var.vpc_id
   subnet_ids = data.aws_subnet_ids.default.ids
 
   # We recommend using a separate EBS Volumes for the Couchbase index dir

@@ -31,8 +31,8 @@ module "couchbase" {
   ami_id    = data.template_file.ami_id.rendered
   user_data = data.template_file.user_data_server.rendered
 
-  vpc_id     = data.aws_vpc.default.id
-  subnet_ids = data.aws_subnet_ids.default.ids
+  vpc_id     = var.vpc_id
+  subnet_ids = var.subnet_ids
 
   # We recommend using two EBS Volumes with your Couchbase servers: one for the data directory and one for the index
   # directory.
@@ -51,9 +51,8 @@ module "couchbase" {
     },
   ]
 
-  # To make testing easier, we allow SSH requests from any IP address here. In a production deployment, we strongly
-  # recommend you limit this to the IP address ranges of known, trusted servers inside your VPC.
-  allowed_ssh_cidr_blocks = ["0.0.0.0/0"]
+  # allow ssh from obt-dev bastion. FIXME: externalize this if we move out of obt-dev
+  allowed_ssh_cidr_blocks = ["172.10.0.0/32"]
 
   ssh_key_name = var.ssh_key_name
 
@@ -114,8 +113,8 @@ module "load_balancer" {
   source = "../../modules/load-balancer"
 
   name       = var.cluster_name
-  vpc_id     = data.aws_vpc.default.id
-  subnet_ids = data.aws_subnet_ids.default.ids
+  vpc_id     = var.vpc_id
+  subnet_ids = var.subnet_ids
 
   # In this example, we only listen for HTTPS requests on the load balancer
 
@@ -123,11 +122,11 @@ module "load_balancer" {
   https_listener_ports_and_certs = [
     {
       port            = var.couchbase_load_balancer_port
-      certificate_arn = data.aws_acm_certificate.load_balancer.arn
+      certificate_arn = var.load_balancer_certificate_arn
     },
     {
       port            = var.sync_gateway_load_balancer_port
-      certificate_arn = data.aws_acm_certificate.load_balancer.arn
+      certificate_arn = var.load_balancer_certificate_arn
     },
   ]
 
@@ -265,10 +264,10 @@ data "aws_subnet_ids" "default" {
 # This example assumes you have requested a (free, auto-renewing) wildcard SSL cert from ACM for var.domain_name.
 # ---------------------------------------------------------------------------------------------------------------------
 
-data "aws_acm_certificate" "load_balancer" {
-  domain   = "*.${var.domain_name}"
-  statuses = ["ISSUED"]
-}
+# data "aws_acm_certificate" "load_balancer" {
+#   domain   = "*.${var.domain_name}"
+#   statuses = ["ISSUED"]
+# }
 
 # ---------------------------------------------------------------------------------------------------------------------
 # USE THE PUBLIC EXAMPLE AMIS IF VAR.AMI_ID IS NOT SPECIFIED

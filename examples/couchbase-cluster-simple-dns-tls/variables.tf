@@ -17,6 +17,14 @@ variable "domain_name" {
   type        = string
 }
 
+variable "vpc_id" {
+  description = "Existing VPC into which the resources will be created"
+  type        = string
+}
+variable "subnet_ids" {
+  description = "Existing Subnet ids into which the resources will be created"
+  type        = list(string)
+}
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.

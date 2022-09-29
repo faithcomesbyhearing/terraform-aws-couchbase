@@ -103,8 +103,14 @@ function run {
   # To keep this example simple, we are hard-coding all credentials in this file in plain text. You should NOT do this
   # in production usage!!! Instead, you should use tools such as Vault, Keywhiz, or KMS to fetch the credentials at
   # runtime and only ever have the plaintext version in memory.
-  local readonly cluster_username="admin"
-  local readonly cluster_password="password"
+
+  #
+  SECRET_VALUE=$(aws secretsmanager get-secret-value --secret-id \"${SECRET}\" --version-stage AWSCURRENT --region \"$region\" | jq -r .SecretString)\n
+  USERNAME=$(echo \"$SECRET_VALUE\" | jq -r .username)
+  PASSWORD=$(echo \"$SECRET_VALUE\" | jq -r .password)
+
+  local readonly cluster_username="$USERNAME"
+  local readonly cluster_password="$PASSWORD"
 
   mount_volumes "$data_volume_device_name" "$data_volume_mount_point" "$volume_owner"
   run_couchbase "$cluster_asg_name" "$cluster_username" "$cluster_password" "$cluster_port" "$data_volume_mount_point" "$data_ramsize" "$index_ramsize" "$fts_ramsize"
