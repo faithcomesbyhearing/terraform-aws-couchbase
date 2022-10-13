@@ -51,8 +51,8 @@ module "couchbase" {
     },
   ]
 
-  # allow ssh from obt-dev bastion. FIXME: externalize this if we move out of obt-dev
-  allowed_ssh_cidr_blocks = ["172.10.0.0/32"]
+  # allow ssh from account resources
+  allowed_ssh_cidr_blocks = var.allowed_ssh_cidr_blocks 
 
   ssh_key_name = var.ssh_key_name
 
@@ -89,7 +89,9 @@ data "template_file" "user_data_server" {
     # We expose the Sync Gateway on all IPs but the Sync Gateway Admin should ONLY be accessible from localhost, as it
     # provides admin access to ALL Sync Gateway data.
     sync_gateway_interface       = ":${module.sync_gateway_security_group_rules.interface_port}"
-    sync_gateway_admin_interface = "127.0.0.1:${module.sync_gateway_security_group_rules.admin_interface_port}"
+    # BWF 10/12/22 - temporarily enable access to SG Admin from all IPs
+    # sync_gateway_admin_interface = "127.0.0.1:${module.sync_gateway_security_group_rules.admin_interface_port}"
+    sync_gateway_admin_interface = ":${module.sync_gateway_security_group_rules.admin_interface_port}"
 
     # Pass in the data about the EBS volumes so they can be mounted
     data_volume_device_name  = var.data_volume_device_name

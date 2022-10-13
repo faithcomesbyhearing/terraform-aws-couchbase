@@ -17,12 +17,19 @@ function run_sync_gateway {
 
   echo "Starting Sync Gateway"
 
-  /opt/couchbase-sync-gateway/bin/run-sync-gateway \
-    --auto-fill-asg "<SERVERS>=$cluster_asg_name:$cluster_port" \
-    --auto-fill "<INTERFACE>=$sync_gateway_interface" \
-    --auto-fill "<ADMIN_INTERFACE>=$sync_gateway_admin_interface" \
-    --auto-fill "<DB_NAME>=$cluster_asg_name" \
-    --auto-fill "<BUCKET_NAME>=$bucket" \
+  # configuration for SG pre v3
+  # /opt/couchbase-sync-gateway/bin/run-sync-gateway \
+  #   --auto-fill-asg "<SERVERS>=$cluster_asg_name:$cluster_port" \
+  #   --auto-fill "<INTERFACE>=$sync_gateway_interface" \
+  #   --auto-fill "<ADMIN_INTERFACE>=$sync_gateway_admin_interface" \
+  #   --auto-fill "<DB_NAME>=$cluster_asg_name" \
+  #   --auto-fill "<BUCKET_NAME>=$bucket" \
+  #   --auto-fill "<DB_USERNAME>=$username" \
+  #   --auto-fill "<DB_PASSWORD>=$password" \
+  #   --use-public-hostname
+  # configuration for SG 3+ (bootstrap/minimal)
+    /opt/couchbase-sync-gateway/bin/run-sync-gateway \
+    --auto-fill-asg "<SERVERS>=$cluster_asg_name" \
     --auto-fill "<DB_USERNAME>=$username" \
     --auto-fill "<DB_PASSWORD>=$password" \
     --use-public-hostname

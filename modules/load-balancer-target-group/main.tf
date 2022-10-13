@@ -103,6 +103,6 @@ resource "aws_alb_listener_rule" "http_path" {
 
 resource "aws_autoscaling_attachment" "attach" {
   autoscaling_group_name = var.asg_name
-  alb_target_group_arn   = aws_alb_target_group.tg.arn
+  lb_target_group_arn   = aws_alb_target_group.tg.arn
 }
 

@@ -105,12 +105,12 @@ function run {
   # runtime and only ever have the plaintext version in memory.
 
   #
-  SECRET_VALUE=$(aws secretsmanager get-secret-value --secret-id \"${SECRET}\" --version-stage AWSCURRENT --region \"$region\" | jq -r .SecretString)\n
-  USERNAME=$(echo \"$SECRET_VALUE\" | jq -r .username)
-  PASSWORD=$(echo \"$SECRET_VALUE\" | jq -r .password)
+  # SECRET_VALUE=$(aws secretsmanager get-secret-value --secret-id \"${SECRET}\" --version-stage AWSCURRENT --region \"$region\" | jq -r .SecretString)\n
+  # USERNAME=$(echo \"$SECRET_VALUE\" | jq -r .username)
+  # PASSWORD=$(echo \"$SECRET_VALUE\" | jq -r .password)
 
-  local readonly cluster_username="$USERNAME"
-  local readonly cluster_password="$PASSWORD"
+  # local readonly cluster_username="$USERNAME"
+  # local readonly cluster_password="$PASSWORD"
 
   mount_volumes "$data_volume_device_name" "$data_volume_mount_point" "$volume_owner"
   run_couchbase "$cluster_asg_name" "$cluster_username" "$cluster_password" "$cluster_port" "$data_volume_mount_point" "$data_ramsize" "$index_ramsize" "$fts_ramsize"
