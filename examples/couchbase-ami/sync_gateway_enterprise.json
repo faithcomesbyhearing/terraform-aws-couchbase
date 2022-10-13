@@ -1,26 +1,15 @@
 {
-  "adminInterface": "<ADMIN_INTERFACE>",
-  "interface": "<INTERFACE>",
-  "databases": {
-    "<DB_NAME>": {
-      "server": "<SERVERS>",
-      "username": "<DB_USERNAME>",
-      "password": "<DB_PASSWORD>",
-      "bucket": "<BUCKET_NAME>",
-      "users": {"GUEST": {"disabled": false, "admin_channels": ["*"]}}
-    }
+  "bootstrap": {
+    "group_id": "Group1",
+    "server": "<SERVERS>",
+    "username": "<DB_USERNAME>",
+    "password": "<DB_PASSWORD>",
+    "use_tls_server": false
   },
   "logging": {
-    "default": {
-      "logFilePath": "/home/sync_gateway/logs/sync-gateway.log",
-      "logKeys": ["*"],
-      "logLevel": "info",
-      "rotation": {
-        "maxsize": 100,
-        "maxage": 30,
-        "maxbackups": 5,
-        "localtime": true
-      }
+    "console": {
+      "log_level": "trace",
+      "log_keys": ["*"]
     }
   }
-}
+ }
